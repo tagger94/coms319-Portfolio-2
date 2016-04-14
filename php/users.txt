@@ -1,0 +1,1 @@
+[{"email":"abc@abc.com","password":"123","isEmployee":"false"},{"email":"tagger94@gmail.com","password":"1234","isEmployee":"false"},{"email":"kkohl@iastate.edu","password":"5678","isEmployee":"true"}]

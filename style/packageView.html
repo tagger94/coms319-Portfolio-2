@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<?php session_start(); ?>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <script src="js/vis/dist/vis.js"></script>
+    <link href="js/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <!--<div class="timeline" id="visualization"></div>-->
+    <table width="100%" class="timeline">
+        <!--<th>-->
+        <!--    <td style="width:70%">Package Timeline</td>-->
+        <!--</th>-->
+
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            //console.log("get");
+            $.post("php/getCustomerPackages.php", {}, function(data, status, xhr) {
+                var obj = JSON.parse(data);
+                console.log(obj);
+
+                if (obj.length != 0) {
+                    var dataset = [];
+
+                    for (var i = 0; i < obj.length; i++) {
+                        dataset.push(convertPackageToTimeline(obj[i]));
+                    }
+
+                    //console.log(dataSet);
+                    makeTimeline(dataset, obj);
+                }
+                else {
+
+                }
+            });
+
+        });
+
+        function convertPackageToTimeline(package) {
+            //var dataSet = {};
+            var arr = [];
+
+            for (var i = 0; i < package.timeline.length; i++) {
+                var temp = {};
+                temp.id = i;
+                temp.content = package.timeline[i].message + "<br>" + package.timeline[i].warehouse;
+                temp.start = package.timeline[i].date;
+                arr.push(temp);
+            }
+
+            return new vis.DataSet(arr);
+        }
+
+        function makeTimeline(dataset, packages) {
+
+            for (var i = 0; i < dataset.length; i++) {
+                var l = "<tr class=\"timeline\">";
+
+                l += "<td class=\"timeline\" id=\"table" + i + "\">";
+
+                // l += "<span class=\"timeline\" id='span" + i + "'>";
+
+                // l += "</span>";
+
+                l += "</td>";
+
+                l += "<td class=\"info\" id=\"info" + i + "\">text";
+
+                l += "</td>";
+
+                l += "</tr>";
+                $("table.timeline").append(l);
+
+                // DOM element where the Timeline will be attached
+                var container = document.getElementById("table" + i);
+
+                // Configuration for the Timeline
+                var options = {};
+
+                // Create a Timeline
+                console.log(new vis.Timeline(container, dataset[i], options));
+
+                var info = packages[i].reciever.name;
+                $("td.info#info" + i).html(info);
+
+            }
+            //console.log(packages);
+
+
+        }
+    </script>
+</body>
+
+</html>

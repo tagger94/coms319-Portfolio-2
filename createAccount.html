@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="js/checkValid.js"></script>
+</head>
+<h2>Create Account</h2>
+<style>
+input.valid {
+	border-style: solid;
+	border-width: 1px;
+	margin: auto;
+}
+
+
+button.valid {
+	background-color: #FDD017;
+	font-weight: bold;
+	border-radius: 10px;
+	padding: 10px;
+	border: none;
+}
+
+span.important {
+	font-weight: bold;
+}
+
+body {
+	background: #1745FC;
+}
+</style>
+
+<body>
+
+	<br>
+	<span class="important"> Email: <input id="email" class="valid"
+		name="email"> </input>
+	</span>
+	<br>
+	<br>
+
+	<!-- Password field -->
+	<span class="important"> Password: </span>
+	<input id="pw" class="valid" name="password">
+	</input>
+	<br>
+	<br>
+	<span class="important"> Confirm password: </span>
+	<input id="conpw" class="valid" name="password confirmation">
+	</input>
+	<br>
+	<br>
+
+	<!-- Radio buttons for checking if user is a librarian. -->
+	<span class="important"> Employee:
+	<input type="checkbox" name="isEmployee" id=isEmp> Yes </input>
+	</span>
+	<br>
+	<br>
+
+
+	<button id=submit class="valid">Submit</button>
+</body>
+</html>

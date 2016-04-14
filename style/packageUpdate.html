@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<?php session_start(); ?>
+<head>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <script src="js/moment/moment.min.js"></script>
+</head>
+
+<body>
+    <table id="activity" class="address">
+        <th>
+            <td class="header1">
+                Package Activity
+            </td>
+        </th>
+        <tr>
+            <td>Employee ID</td>
+            <td>
+                <input type="text" id="eid" />
+            </td>
+        </tr>
+        <tr>
+            <td>Package ID</td>
+            <td>
+                <input type="text" id="pid" />
+            </td>
+        </tr>
+        <tr>
+            <td>Activity Message</td>
+            <td>
+                <input type="text" id="message" />
+            </td>
+        </tr>
+        <tr>
+            <td>Warehouse</td>
+            <td>
+                <input type="text" id="warehouse" />
+            </td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>
+                <input type="text" id="date" />
+            </td>
+        </tr>
+    </table>
+    <br>
+    <button id="act_populate">DEBUG Populate Fields</button>
+    <br>
+    <button id="act_submit">Submit</button>
+
+    <script src="js/faker/faker.js"></script>
+    <script src="js/package.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("button#act_submit").click(function() {
+                //Create update to send
+                var update = {};
+                //Create Date
+                var now = moment().add(Math.random() * -13, 'days').format("YYYY-MM-DD");
+                //Create Activity
+                update.activity = new Activity($("#message").val(), $("#warehouse").val(), now);
+                //Create pid to go to
+                update.pid = $("#pid").val();
+                
+                console.log("Sending Update");
+                console.log(update);
+                
+                //Create Post to send update
+                $.post("php/updatePackage.php", update, function(data, status, xhr) {
+                    //var obj = JSON.parse(data);
+                    console.log(data);
+                    //Clear Inputs
+                    $("input").val("");
+                });
+            });
+
+            $("button#act_populate").click(function() {
+                
+                $("#pid").val("DEBUG");
+                $("#message").val("Package moved to:");
+                $("#warehouse").val(faker.address.city() + ", " + faker.address.state());
+            });
+        });
+    </script>
+</body>
+
+</html>
